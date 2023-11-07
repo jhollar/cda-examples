@@ -1,0 +1,155 @@
+---
+openapi: 3.0.0
+info:
+  title: CDA Python Service Template
+  description: Example Python Service
+  version: 1.1.0
+servers:
+- url: /cdapython/api/v1
+tags:
+- name: Service Controller
+  description: Service Controller
+paths:
+  /info:
+    get:
+      tags:
+      - Service Controller
+      summary: 'Returns service information '
+      description: Returns service information
+      operationId: getServiceInformation
+      responses:
+        "200":
+          description: Returned Service Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /health:
+    get:
+      tags:
+      - Service Controller
+      summary: 'Returns service health '
+      description: Returns service health
+      operationId: getServiceHealth
+      responses:
+        "200":
+          description: Found Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+components:
+  schemas:
+    GenericJSON:
+      type: object
+    DNACInstance:
+      required:
+      - address
+      - host
+      - latitude
+      - longitude
+      - name
+      - password
+      - tenantid
+      - username
+      type: object
+      properties:
+        name:
+          type: string
+        tenantid:
+          type: string
+        host:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        address:
+          type: string
+        longitude:
+          type: string
+        latitude:
+          type: string
+    EAServiceChain:
+      required:
+      - offerid
+      - serviceid
+      - tenantid
+      type: object
+      properties:
+        tenantid:
+          type: string
+        serviceid:
+          type: string
+        offerid:
+          type: string
+    UserInfo:
+      required:
+      - userName
+      - userPwd
+      type: object
+      properties:
+        userName:
+          type: string
+        userPwd:
+          type: string

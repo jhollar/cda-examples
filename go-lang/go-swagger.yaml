@@ -1,0 +1,94 @@
+---
+openapi: 3.0.0
+info:
+  title: CDA Golang Service Template
+  version: 1.1.0
+servers:
+- url: /cdago/api/v1
+paths:
+  /health:
+    get:
+      summary: Service Health
+      operationId: tle-health
+      responses:
+        "200":
+          description: Found Health Status
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /info:
+    get:
+      summary: Service Information
+      operationId: tle-information
+      responses:
+        "200":
+          description: Found Information
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+components:
+  schemas:
+    GenericJSON:
+      type: object
