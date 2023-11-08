@@ -1,0 +1,704 @@
+---
+openapi: 3.0.0
+info:
+  title: Electricity Sustainability
+  description: This is repository contains the proof-of-concept which demonstrates electricity sustainability using Temporal services.
+  version: 1.0.0
+servers:
+- url: /sustain/api/v1
+tags:
+- name: Service Controller
+  description: Service Controller APIs
+- name: Routes Controller
+  description: Routes Controller
+paths:
+  /health:
+    get:
+      tags:
+      - Service Controller
+      summary: Returns health of service
+      description: Returns health of service
+      operationId: getServiceHealth
+      responses:
+        "200":
+          description: Service Health
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /info:
+    get:
+      tags:
+      - Service Controller
+      summary: 'Returns network operation service information '
+      description: Returns network operation service information
+      operationId: getServiceInfo
+      responses:
+        "200":
+          description: Returned Service Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /token:
+    get:
+      tags:
+      - Service Controller
+      summary: Returns the current Electricity Map API key
+      description: "Returns the current Electricity Map API key \n"
+      operationId: getElectricityMapAPIKey
+      responses:
+        "200":
+          description: Electricity Map Account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Account'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Account not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /token/update:
+    put:
+      tags:
+      - Service Controller
+      summary: Update a given Electricity Map API key
+      description: "Update a given Electricity Map API key \n"
+      operationId: updateElectricityMapAPIKey
+      requestBody:
+        description: Account Information
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
+      responses:
+        "200":
+          description: Account Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Account not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /authorized/zones:
+    get:
+      tags:
+      - Routes Controller
+      summary: Returns a list of zones and routes available with this token
+      description: |
+        Returns a list of zones and routes available with this token
+      operationId: getAuthorizedZones
+      responses:
+        "200":
+          description: Summary list of zones and routes available with this token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Zones not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /carbon-intensity/forecast/{zone}:
+    get:
+      tags:
+      - Routes Controller
+      summary: Retrieves the forecasted carbon intensity (in gCO2eq/kWh) of an area.
+      description: |
+        Rretrieves the forecasted carbon intensity (in gCO2eq/kWh) of an area.
+      operationId: getCarbonIntensityForecast
+      parameters:
+      - name: zone
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Forecasted carbon intensity (range)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Carbon Intensity Forecast not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /carbon-intensity/history/{zone}:
+    get:
+      tags:
+      - Routes Controller
+      summary: Get Recent carbon intensity history.
+      description: |
+        Retrieves the last 24h of carbon intensity (in gCO2eq/kWh) of an area.
+      operationId: getRecentCarbonIntensity
+      parameters:
+      - name: zone
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Past carbon intensity history (range)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Carbon Intensity History not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /carbon-intensity/recent/history/lat/{lat}/lon/{lon}:
+    get:
+      tags:
+      - Routes Controller
+      summary: Retrieves retrieves the last 24 hours of carbon intensity (in gCO2eq/kWh) of an area
+      description: |
+        Retrieves retrieves the last 24 hours of carbon intensity (in gCO2eq/kWh) of an area.
+      operationId: getRecentHistoryCarbonIntensity
+      parameters:
+      - name: lat
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: lon
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Past carbon intensity history (range)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Carbon Intensity History not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /carbon-intensity/live/lat/{lat}/lon/{lon}:
+    get:
+      tags:
+      - Routes Controller
+      summary: Rretrieves the live carbon intensity (in gCO2eq/kWh) of an area.
+      description: |
+        Rretrieves the live carbon intensity (in gCO2eq/kWh) of an area.
+      operationId: getLiveCarbonIntensity
+      parameters:
+      - name: lat
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: lon
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Forecasted carbon intensity (range)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Carbon Intensity Forecast not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /emissions/{zone}/start/{startDate}/end/{endDate}:
+    get:
+      tags:
+      - Routes Controller
+      summary: Retrieves a past carbon intensity (in gCO2eq/kWh) of an area within a given date range.
+      description: |
+        Retrieves a past carbon intensity (in gCO2eq/kWh) of an area within a given date range
+      operationId: getAuthorizedEmissions
+      parameters:
+      - name: zone
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: startDate
+        in: path
+        description: datetime in ISO format
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: datetime
+          example: 2018-03-20T09:12:28Z
+      - name: endDate
+        in: path
+        description: datetime in ISO format
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: datetime
+          example: 2018-03-20T09:12:28Z
+      responses:
+        "200":
+          description: Past carbon intensity history (range)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Zones not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /powerbreakdown/live/lat{lat}/lon/{lon}:
+    get:
+      tags:
+      - Routes Controller
+      summary: Retrieves retrieves the last known data about the origin of electricity in an area.
+      description: |
+        Retrieves retrieves the last known data about the origin of electricity in an area.
+      operationId: getLivePowerBreakdown
+      parameters:
+      - name: lat
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: lon
+        in: path
+        description: datetime in ISO format
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: datetime
+          example: 2018-03-20T09:12:28Z
+      responses:
+        "200":
+          description: Power Breakdown of an area
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Power Breakdown not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /powerbreakdown/{zone}/start/{startDate}/end/{endDate}:
+    get:
+      tags:
+      - Routes Controller
+      summary: Retrieves a past power breakdown of an area within a given date range.
+      description: |
+        Retrieves a past power breakdown of an area within a given date range
+      operationId: getPowerBreakdown
+      parameters:
+      - name: zone
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: startDate
+        in: path
+        description: datetime in ISO format
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: datetime
+          example: 2018-03-20T09:12:28Z
+      - name: endDate
+        in: path
+        description: datetime in ISO format
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: datetime
+          example: 2018-03-20T09:12:28Z
+      responses:
+        "200":
+          description: Power Breakdown of an area
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Power Breakdown not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /powerbreakdown/recent/history/lat/{lat}/lon/{lon}:
+    get:
+      tags:
+      - Routes Controller
+      summary: Retrieves retrieves the last 24 hours of power consumption and production breakdown of an area.
+      description: |
+        Retrieves retrieves the last 24 hours of power consumption and production breakdown of an area.
+      operationId: getRecentPowerBreakdown
+      parameters:
+      - name: lat
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: lon
+        in: path
+        description: Zone
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Power Breakdown of an area
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "404":
+          description: Power Breakdown not found
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+components:
+  schemas:
+    GenericJSON:
+      type: object
+    Account:
+      required:
+      - token
+      type: object
+      properties:
+        token:
+          type: string

@@ -1,0 +1,129 @@
+---
+openapi: 3.0.0
+info:
+  title: Get Meraki Switches Temporal Go Application
+  description: This is repository contains the proof-of-concept which demonstrates a go-lang application using Temporal services to obtain a list of Meraki Switches.
+  version: 1.0.0
+servers:
+- url: /meraki/api/v1
+tags:
+- name: Service Controller
+  description: Service Controller APIs
+- name: Meraki Controller
+  description: Meraki Controller APIs
+paths:
+  /health:
+    get:
+      tags:
+      - Service Controller
+      summary: Returns health of service
+      description: Returns health of service
+      operationId: getServiceHealth
+      responses:
+        "200":
+          description: Service Health
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /info:
+    get:
+      tags:
+      - Service Controller
+      summary: 'Returns network operation service information '
+      description: Returns network operation service information
+      operationId: getServiceInfo
+      responses:
+        "200":
+          description: Returned Service Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /switches:
+    get:
+      tags:
+      - Meraki Controller
+      summary: 'Returns a list of Meraki Switch Devices '
+      description: Returns a list of Meraki Switch Devices
+      operationId: getSwitches
+      responses:
+        "200":
+          description: Returns a list of Meraki Switch Devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+components:
+  schemas:
+    GenericJSON:
+      type: object

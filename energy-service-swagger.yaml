@@ -1,0 +1,813 @@
+---
+openapi: 3.0.0
+info:
+  title: Energy Service
+  description: A service for ingesting and reporting on power consumption.
+  termsOfService: https://www.cisco.com
+  license:
+    name: MIT
+  version: "1.0"
+servers:
+- url: /emws/api/v1
+paths:
+  /info:
+    get:
+      tags:
+      - Power
+      summary: 'Returns service information '
+      description: Returns service information
+      operationId: getServiceInformation
+      responses:
+        "200":
+          description: Returned Service Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /health:
+    get:
+      tags:
+      - Power
+      summary: 'Returns service health '
+      description: Returns service health
+      operationId: getServiceHealth
+      responses:
+        "200":
+          description: Found Information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metrics/total:
+    get:
+      tags:
+      - Power
+      summary: 'Return a total count of metrics '
+      description: Return a total count of metrics
+      operationId: getMetricCound
+      responses:
+        "200":
+          description: Return a total count of metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metrics/tables:
+    get:
+      tags:
+      - Power
+      summary: 'Return a list of metric tables '
+      description: Return a list of metric tables
+      operationId: getMetricTables
+      responses:
+        "200":
+          description: Return a list of metric tables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PowerMetricTables'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PowerMetricTables'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metrics/table/{tablename}/limit/{limit}:
+    get:
+      tags:
+      - Power
+      summary: 'Returns a limit number of records for a given table '
+      description: Returns a limit number of records for a given table
+      operationId: getMetrics
+      parameters:
+      - name: tablename
+        in: path
+        description: Table Name equals Account Identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: limit
+        in: path
+        description: Limit the data records returned
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Returned Data Records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metrics/location/table/{tablename}/lat/{lat}/lon/{lon}:
+    get:
+      tags:
+      - Power
+      summary: 'Returns all the records for a give Latitude and Longtitude '
+      description: Returns all the records for a give Latitude and Longtitude
+      operationId: getMetricsLatLon
+      parameters:
+      - name: tablename
+        in: path
+        description: Table Name equals Account Identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: lat
+        in: path
+        description: Latitude
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: lon
+        in: path
+        description: Longtitude
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Returned Data Records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metrics/customers/table/{tablename}/lat/{lat}/lon/{lon}:
+    get:
+      tags:
+      - Power
+      summary: 'Returns all the customers for a give Latitude and Longtitude '
+      description: Returns all the customers for a give Latitude and Longtitude
+      operationId: getCustomersLatLon
+      parameters:
+      - name: tablename
+        in: path
+        description: Table Name equals Account Identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: lat
+        in: path
+        description: Latitude
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: lon
+        in: path
+        description: Longtitude
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Returned Data Records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metrics/table/{tablename}/customer/{customerId}:
+    get:
+      tags:
+      - Power
+      summary: 'Returns all the customers for a give Customer Identifier '
+      description: Returns all the customers for a give Customer Identifier
+      operationId: getCustomersbyId
+      parameters:
+      - name: tablename
+        in: path
+        description: Table Name equals Account Identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      - name: customerId
+        in: path
+        description: Customer Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Returned Customer Records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metrics/all/customers/{tablename}:
+    get:
+      tags:
+      - Power
+      summary: 'Returns all the unique customers  '
+      description: Returns all the unique customers
+      operationId: getAllUniqueCustomers
+      parameters:
+      - name: tablename
+        in: path
+        description: Table Name equals Account Identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Returned Data Records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metrics/table/{tablename}/details:
+    get:
+      tags:
+      - Power
+      summary: 'Returns specific table details '
+      description: Returns specific table details
+      operationId: getMetricsTableDetails
+      parameters:
+      - name: tablename
+        in: path
+        description: Table Name equals Account Identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Returned Table Description
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metric/table/{tablename}:
+    delete:
+      tags:
+      - Power
+      summary: 'Removes metric table by name '
+      description: Removes metric table by name
+      operationId: removeMetricTable
+      parameters:
+      - name: tablename
+        in: path
+        description: Table Name equals Account Identifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: string
+      responses:
+        "200":
+          description: Removed table
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /power:
+    post:
+      tags:
+      - Power
+      summary: Ingests power consumption data."
+      operationId: ingestPowerData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PowerIngestRequest'
+        required: true
+      responses:
+        "202":
+          description: Accepted
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+  /metric/table:
+    post:
+      tags:
+      - Power
+      summary: Create metric table."
+      operationId: createMetricTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PowerMetricTable'
+        required: true
+      responses:
+        "202":
+          description: Accepted
+        "400":
+          description: The request failed due to an apparent client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "401":
+          description: The request requires user authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+        "500":
+          description: Internal Service Error - Check log files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GenericJSON'
+components:
+  schemas:
+    GenericJSON:
+      type: object
+    PowerIngestRequest:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/PowerIngressDataPoint'
+    PowerIngressDataPoint:
+      required:
+      - accountId
+      - consumerPath
+      - customerId
+      - endTime
+      - location
+      - powerConsumption
+      - startTime
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/PowerAccountId'
+        customerId:
+          $ref: '#/components/schemas/PowerCustomerId'
+        consumerPath:
+          $ref: '#/components/schemas/PowerConsumerPath'
+        location:
+          $ref: '#/components/schemas/PowerLocation'
+        startTime:
+          type: string
+          format: date-time
+          example: 2023-07-13T11:36:28Z
+        endTime:
+          type: string
+          format: date-time
+          example: 2023-07-14T11:36:28Z
+        powerConsumption:
+          minimum: 0
+          type: number
+          format: float
+    PowerMetricTable:
+      required:
+      - accountId
+      type: object
+      properties:
+        accountId:
+          type: string
+    TimestreamTable:
+      required:
+      - database
+      - name
+      type: object
+      properties:
+        database:
+          type: string
+        name:
+          type: string
+    PowerMetricTables:
+      required:
+      - tables
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimestreamTable'
+    PowerAccountId:
+      type: string
+      format: uuid
+      example: 92eadaf7-8f02-4023-b83a-a45e9fe652cf
+    PowerCustomerId:
+      type: string
+      format: "[0-9a-z-_]{1,100}"
+      example: meraki-customer-12345
+    PowerConsumerPath:
+      pattern: "^(\\/[0-9a-z-_]{1,100}){1,10}$"
+      type: string
+      example: /someSiteId/someDeviceId
+    PowerLocation:
+      required:
+      - latitude
+      - longitude
+      type: object
+      properties:
+        latitude:
+          maximum: 90
+          minimum: -90
+          type: number
+          description: Location latitude in decimal degrees format.
+          format: double
+          example: 12.34
+        longitude:
+          maximum: 180
+          minimum: -180
+          type: number
+          description: Location longitude in decimal degrees format.
+          format: double
+          example: 56.78
+        geohash:
+          maxLength: 8
+          minLength: 1
+          type: string
+          description: Location geohash calculated using latitude and longitude in string format.
+          readOnly: true
